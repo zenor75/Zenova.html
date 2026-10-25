@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZENOVA Community Portal | The Ultimate Cyber Realm</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            zenova: {
+              bg: '#07020d',
+              surface: '#0f051d',
+              card: '#140827',
+              border: '#2e124a',
+              cyan: '#00f0ff',
+              magenta: '#ff007f',
+              purple: '#8b5cf6',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow-cyan': 'glowCyan 3s infinite alternate',
+            'glow-magenta': 'glowMagenta 3s infinite alternate',
+          },
+          keyframes: {
+            glowCyan: {
+              '0%': { filter: 'drop-shadow(0 0 5px rgba(0,240,255,0.4))' },
+              '100%': { filter: 'drop-shadow(0 0 15px rgba(0,240,255,0.9))' }
+            },
+            glowMagenta: {
+              '0%': { filter: 'drop-shadow(0 0 5px rgba(255,0,127,0.4))' },
+              '100%': { filter: 'drop-shadow(0 0 15px rgba(255,0,127,0.9))' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07020d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2e124a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8b5cf6;
+    }
+  </style>
+</head>
+
+<body class="bg-[#07020d] text-gray-100 flex flex-col min-h-screen font-sans relative overflow-x-hidden selection:bg-[#00f0ff] selection:text-black">
+
+  <!-- Interactive Particle Mesh Canvas Background -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Top Glow Orbs -->
+  <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-[#00f0ff]/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+  <div class="fixed top-20 right-1/4 w-[500px] h-[500px] bg-[#ff007f]/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="sticky top-0 z-40 bg-[#0f051d]/85 backdrop-blur-2xl border-b border-purple-900/40 px-4 lg:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <div onclick="switchTab('home')" class="flex items-center gap-3 cursor-pointer group">
+        <!-- SVG LOGO EMBEDDED DIRECTLY MATCHING USER ARTWORK -->
+        <div class="relative w-11 h-11 transition-transform group-hover:scale-105">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <defs>
+              <linearGradient id="zenovaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f0ff" />
+                <stop offset="50%" stop-color="#8b5cf6" />
+                <stop offset="100%" stop-color="#ff007f" />
+              </linearGradient>
+              <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <circle cx="100" cy="100" r="90" fill="#0f051d" stroke="url(#zenovaGrad)" stroke-width="4" filter="url(#neonGlow)" />
+            <path d="M40 80 Q100 60 160 80 M40 120 Q100 140 160 120" stroke="#8b5cf6" stroke-width="1.5" opacity="0.4" />
+            <!-- Cap icon -->
+            <path d="M35 80 L65 65 L95 80 L65 95 Z" fill="none" stroke="#00f0ff" stroke-width="3" filter="url(#neonGlow)" />
+            <path d="M45 86 V98 C45 102 85 102 85 98 V86" fill="none" stroke="#00f0ff" stroke-width="2" />
+            <path d="M88 80 V105 L92 108" stroke="#00f0ff" stroke-width="2" />
+            <!-- Mouse/Ghost icon inside O -->
+            <path d="M98 118 C92 118 88 123 88 132 C88 142 112 142 112 132 C112 123 108 118 98 118 Z" fill="none" stroke="#ff007f" stroke-width="2.5" filter="url(#neonGlow)" />
+            <circle cx="94" cy="125" r="1.5" fill="#00f0ff" />
+            <circle cx="102" cy="125" r="1.5" fill="#00f0ff" />
+            <!-- ZENOVA Typography -->
+            <text x="100" y="112" text-anchor="middle" fill="none" stroke="#00f0ff" stroke-width="3" font-size="28" font-family="monospace" font-weight="900" letter-spacing="2">ZENOVA</text>
+            <text x="100" y="112" text-anchor="middle" fill="#ffffff" font-size="28" font-family="monospace" font-weight="900" letter-spacing="2">ZENOVA</text>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-xl tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] via-purple-300 to-[#ff007f] font-mono">
+              ZENOVA
+            </span>
+            <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-cyan-950/80 border border-[#00f0ff]/40 text-[#00f0ff] tracking-wider">
+              COMMUNITY
+            </span>
+          </div>
+          <p class="text-[10px] text-gray-400 font-mono">The Ultimate Cyber Realm</p>
+        </div>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-1 bg-purple-950/30 border border-purple-800/30 rounded-full p-1 text-xs font-medium">
+        <button id="nav-home" onclick="switchTab('home')" class="nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-white bg-gradient-to-r from-[#00f0ff] to-purple-600 font-bold shadow-lg shadow-cyan-500/20">
+          <i data-lucide="compass" class="w-3.5 h-3.5"></i> Home Hub
+        </button>
+        <button id="nav-hubs" onclick="switchTab('hubs')" class="nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-gray-400 hover:text-white hover:bg-purple-900/30">
+          <i data-lucide="globe" class="w-3.5 h-3.5"></i> Social Hubs
+        </button>
+        <button id="nav-categories" onclick="switchTab('categories')" class="nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-gray-400 hover:text-white hover:bg-purple-900/30">
+          <i data-lucide="sliders" class="w-3.5 h-3.5"></i> 10 Spheres
+        </button>
+        <button id="nav-team" onclick="switchTab('team')" class="nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-gray-400 hover:text-white hover:bg-purple-900/30">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Operation Team
+        </button>
+        <button id="nav-events" onclick="switchTab('events')" class="nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-gray-400 hover:text-white hover:bg-purple-900/30">
+          <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Events
+        </button>
+        <button id="nav-showcase" onclick="switchTab('showcase')" class="nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-gray-400 hover:text-white hover:bg-purple-900/30">
+          <i data-lucide="flame" class="w-3.5 h-3.5"></i> Showcase
+        </button>
+      </nav>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-3">
+      <button onclick="toggleAudio()" id="audio-btn" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-800/40 bg-purple-950/30 text-gray-400 text-xs font-mono hover:text-white">
+        <i data-lucide="volume-x" class="w-3.5 h-3.5"></i>
+        <span>AMBIENT MUTE</span>
+      </button>
+
+      <button onclick="openJoinModal()" class="flex items-center gap-2 px-5 py-2 rounded-full font-bold text-xs bg-gradient-to-r from-[#00f0ff] via-purple-500 to-[#ff007f] text-black hover:opacity-95 shadow-lg shadow-pink-500/25 transition-all hover:scale-105">
+        <i data-lucide="zap" class="w-4 h-4 fill-black"></i>
+        <span>JOIN ZENOVA</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER AREA -->
+  <main class="flex-1 relative z-10 max-w-7xl w-full mx-auto p-4 lg:p-8 space-y-12">
+
+    <!-- ==================== TAB 1: HOME ==================== -->
+    <section id="tab-home" class="tab-content space-y-12">
+      <!-- HERO BANNER -->
+      <div class="relative rounded-3xl bg-gradient-to-br from-purple-950/70 via-slate-900/80 to-[#120524]/90 border border-purple-800/50 p-6 lg:p-12 overflow-hidden shadow-2xl">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#00f0ff]/20 via-[#ff007f]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-3xl space-y-6 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-[#00f0ff]/40 text-[#00f0ff] text-xs font-mono font-semibold">
+            <span class="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping"></span>
+            <span>24,850+ Active Cyber Members</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight font-sans">
+            WHERE CREATORS, GAMERS & SCHOLARS 
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] via-purple-400 to-[#ff007f]">
+              UNITE IN ZENOVA
+            </span>
+          </h1>
+
+          <p class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+            Step into the next-gen mega community hub. Whether you are climbing esports ranks, producing beats, coding algorithms, discussing weekly Manhwa chapters, or snapping aesthetic photos — ZENOVA is your ultimate home across Discord, WhatsApp, Instagram, TikTok & Facebook.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <button onclick="openJoinModal()" class="flex items-center gap-2 px-6 py-3 rounded-xl font-extrabold text-sm bg-gradient-to-r from-[#00f0ff] via-purple-500 to-[#ff007f] text-slate-950 hover:opacity-95 shadow-xl shadow-cyan-500/20 transition-all hover:scale-105">
+              <i data-lucide="users" class="w-4 h-4"></i>
+              <span>Get Instant Platform Invites</span>
+            </button>
+
+            <button onclick="switchTab('team')" class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-purple-950/60 hover:bg-purple-900/60 border border-purple-700/50 text-white transition-all">
+              <i data-lucide="shield-check" class="w-4 h-4 text-[#00f0ff]"></i>
+              <span>Meet Operation Staff</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-purple-900/40 font-mono">
+            <div>
+              <div className="text-2xl font-black text-[#00f0ff]" style="color:#00f0ff; font-size: 1.5rem; font-weight: 900;">10 SPHERES</div>
+              <div class="text-xs text-gray-400">Tailored Interests</div>
+            </div>
+            <div>
+              <div className="text-2xl font-black text-[#ff007f]" style="color:#ff007f; font-size: 1.5rem; font-weight: 900;">5 PLATFORMS</div>
+              <div class="text-xs text-gray-400">Synced Socials</div>
+            </div>
+            <div>
+              <div className="text-2xl font-black text-purple-400" style="color:#c084fc; font-size: 1.5rem; font-weight: 900;">18 STAFF</div>
+              <div class="text-xs text-gray-400">Dedicated Operation Team</div>
+            </div>
+            <div>
+              <div className="text-2xl font-black text-yellow-400" style="color:#facc15; font-size: 1.5rem; font-weight: 900;">24/7 VOICE</div>
+              <div class="text-xs text-gray-400">Active Voice Lounges</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK SOCIAL HUBS PREVIEW -->
+      <div class="space-y-4">
+        <div class="flex justify-between items-end">
+          <div>
+            <h2 class="text-2xl font-black text-white flex items-center gap-2">
+              <i data-lucide="globe" class="w-6 h-6 text-[#00f0ff]"></i>
+              Official Social Community Links
+            </h2>
+            <p class="text-xs text-gray-400">Connect through your favorite social media platform groups & channels.</p>
+          </div>
+          <button onclick="switchTab('hubs')" class="text-xs font-mono font-bold text-[#00f0ff] hover:text-cyan-300 flex items-center gap-1">
+            View All Hubs <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="home-hubs-container">
+          <!-- Dynamically Injected Home Hub Cards -->
+        </div>
+      </div>
+
+      <!-- SPHERES PREVIEW -->
+      <div class="space-y-4">
+        <div class="flex justify-between items-end">
+          <div>
+            <h2 class="text-2xl font-black text-white flex items-center gap-2">
+              <i data-lucide="sliders" class="w-6 h-6 text-[#ff007f]"></i>
+              Featured Interest Spheres
+            </h2>
+            <p class="text-xs text-gray-400">Join dedicated sub-channels based on what you love.</p>
+          </div>
+          <button onclick="switchTab('categories')" class="text-xs font-mono font-bold text-[#ff007f] hover:text-pink-300 flex items-center gap-1">
+            Browse All 10 <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="home-spheres-container">
+          <!-- Dynamically Injected Spheres -->
+        </div>
+      </div>
+
+      <!-- INTERACTIVE QUIZ & RADIO STREAM -->
+      <div class="p-6 rounded-3xl bg-gradient-to-r from-purple-950/60 via-slate-900/90 to-pink-950/60 border border-purple-800/50 flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div class="space-y-3 max-w-xl">
+          <div class="inline-flex items-center gap-1.5 text-xs font-mono text-yellow-400 bg-yellow-950/40 border border-yellow-800/50 px-2.5 py-1 rounded-full">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>Interactive Sphere Matcher</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white">Unsure where to start in ZENOVA?</h3>
+          <p class="text-xs text-gray-300 leading-relaxed">
+            Select your primary passion below to instantly match your vibe with the right ZENOVA sub-community!
+          </p>
+
+          <div id="quiz-options" class="flex flex-wrap gap-2 pt-2">
+            <button onclick="runQuiz('Gaming & Esports')" class="px-3 py-1.5 rounded-lg bg-purple-900/50 hover:bg-[#00f0ff] hover:text-black border border-purple-700/40 text-xs font-semibold transition-all">
+              🎮 Competitive Gamer
+            </button>
+            <button onclick="runQuiz('Music & Beats')" class="px-3 py-1.5 rounded-lg bg-purple-900/50 hover:bg-[#ff007f] hover:text-black border border-purple-700/40 text-xs font-semibold transition-all">
+              🎵 Music Producer
+            </button>
+            <button onclick="runQuiz('Anime & Manhwa')" class="px-3 py-1.5 rounded-lg bg-purple-900/50 hover:bg-violet-500 hover:text-black border border-purple-700/40 text-xs font-semibold transition-all">
+              🌸 Anime & Webtoons Reader
+            </button>
+            <button onclick="runQuiz('Education & Tech')" class="px-3 py-1.5 rounded-lg bg-purple-900/50 hover:bg-blue-500 hover:text-black border border-purple-700/40 text-xs font-semibold transition-all">
+              💻 Coding & Scholar
+            </button>
+          </div>
+
+          <div id="quiz-result" class="hidden p-4 rounded-xl bg-cyan-950/60 border border-[#00f0ff]/40 text-xs text-cyan-200 space-y-2">
+            <div id="quiz-matched-text" class="font-bold text-[#00f0ff]"></div>
+            <p>You belong in our top active Voice & Discord sub-hubs!</p>
+            <button onclick="resetQuiz()" class="text-[10px] underline text-gray-400 hover:text-white">Reset Matcher</button>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-black/40 border border-purple-800/40 text-center space-y-2 max-w-xs w-full">
+          <i data-lucide="radio" class="w-8 h-8 mx-auto text-[#00f0ff] animate-pulse"></i>
+          <div class="text-xs font-bold text-white">ZENOVA Beats & Ambient Stream</div>
+          <div class="text-[10px] text-gray-400 font-mono">Lo-Fi & Cyberpunk Chill 24/7</div>
+          <button onclick="toggleAudio()" class="w-full py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-[#00f0ff] to-purple-600 text-white flex items-center justify-center gap-2">
+            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+            <span id="radio-btn-text">Play Cyber Beats</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: SOCIAL PLATFORM HUBS ==================== -->
+    <section id="tab-hubs" class="tab-content hidden space-y-6">
+      <div class="space-y-2">
+        <h2 class="text-3xl font-black text-white flex items-center gap-3">
+          <i data-lucide="globe" class="w-7 h-7 text-[#00f0ff]"></i>
+          Official Social Platform Links
+        </h2>
+        <p class="text-sm text-gray-400">
+          ZENOVA operates across 5 primary social ecosystems. Join your preferred platform or sync with all of them for complete access!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="all-hubs-container">
+        <!-- Injected Social Hub Cards -->
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: 10 CATEGORY SPHERES ==================== -->
+    <section id="tab-categories" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-3xl font-black text-white flex items-center gap-3">
+            <i data-lucide="sliders" class="w-7 h-7 text-[#ff007f]"></i>
+            10 ZENOVA Interest Spheres
+          </h2>
+          <p class="text-sm text-gray-400">Discover sub-communities and active chat rooms dedicated to your passions.</p>
+        </div>
+
+        <div class="relative max-w-xs w-full">
+          <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-3"></i>
+          <input
+            type="text"
+            id="sphere-search"
+            oninput="filterSpheres()"
+            placeholder="Search spheres or topics..."
+            class="w-full bg-purple-950/30 border border-purple-800/50 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#00f0ff]"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="all-spheres-container">
+        <!-- Injected 10 Category Cards -->
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: OPERATION TEAM (STAFF) ==================== -->
+    <section id="tab-team" class="tab-content hidden space-y-10">
+      <div class="space-y-2">
+        <h2 class="text-3xl font-black text-white flex items-center gap-3">
+          <i data-lucide="shield-check" class="w-8 h-8 text-[#00f0ff]"></i>
+          ZENOVA Operation Team & Staff Hierarchy
+        </h2>
+        <p class="text-sm text-gray-400">
+          Meet the 18 dedicated team members maintaining order, organizing tournaments, facilitating voice channels, and assisting members 24/7.
+        </p>
+      </div>
+
+      <!-- METRICS BAR -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-purple-950/30 border border-purple-800/40 font-mono">
+        <div class="p-3 bg-black/40 rounded-xl border border-purple-900/40">
+          <div class="text-xs text-amber-400 font-bold uppercase">1 Owner / Founder</div>
+          <div class="text-[11px] text-gray-400">Core Ecosystem Lead</div>
+        </div>
+        <div class="p-3 bg-black/40 rounded-xl border border-purple-900/40">
+          <div class="text-xs text-[#ff007f] font-bold uppercase">1 Administrator</div>
+          <div class="text-[11px] text-gray-400">Platform Operations</div>
+        </div>
+        <div class="p-3 bg-black/40 rounded-xl border border-purple-900/40">
+          <div class="text-xs text-[#00f0ff] font-bold uppercase">6 Moderators</div>
+          <div class="text-[11px] text-gray-400">Category Supervisors</div>
+        </div>
+        <div class="p-3 bg-black/40 rounded-xl border border-purple-900/40">
+          <div class="text-xs text-emerald-400 font-bold uppercase">10 Helpers</div>
+          <div class="text-[11px] text-gray-400">Community Guides</div>
+        </div>
+      </div>
+
+      <!-- EXECUTIVE STAFF (OWNER & ADMIN) -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-extrabold text-gray-200 uppercase tracking-widest font-mono flex items-center gap-2">
+          <i data-lucide="crown" class="w-5 h-5 text-amber-400"></i>
+          Executive Staff Lead
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="executive-staff-container">
+          <!-- Founder & Admin Injected Here -->
+        </div>
+      </div>
+
+      <!-- MODERATORS (6 MEMBERS) -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-extrabold text-gray-200 uppercase tracking-widest font-mono flex items-center gap-2">
+          <i data-lucide="shield" class="w-5 h-5 text-[#00f0ff]"></i>
+          Moderation Officers (6 Members)
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="moderators-container">
+          <!-- 6 Mods Injected Here -->
+        </div>
+      </div>
+
+      <!-- HELPERS (10 MEMBERS) -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-extrabold text-gray-200 uppercase tracking-widest font-mono flex items-center gap-2">
+          <i data-lucide="user-check" class="w-5 h-5 text-emerald-400"></i>
+          Community Helpers (10 Members)
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3" id="helpers-container">
+          <!-- 10 Helpers Injected Here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: EVENTS ==================== -->
+    <section id="tab-events" class="tab-content hidden space-y-6">
+      <div class="space-y-2">
+        <h2 class="text-3xl font-black text-white flex items-center gap-3">
+          <i data-lucide="calendar" class="w-7 h-7 text-amber-400"></i>
+          Community Tournaments & Stream Events
+        </h2>
+        <p class="text-sm text-gray-400">RSVP for weekly gaming cups, anime watch-alongs, beat battles, and art contests.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="events-container">
+        <!-- Injected Events -->
+      </div>
+    </section>
+
+    <!-- ==================== TAB 6: CREATIVE SHOWCASE ==================== -->
+    <section id="tab-showcase" class="tab-content hidden space-y-6">
+      <div class="space-y-2">
+        <h2 class="text-3xl font-black text-white flex items-center gap-3">
+          <i data-lucide="flame" class="w-7 h-7 text-[#ff007f]"></i>
+          Community Showcase Feed
+        </h2>
+        <p class="text-sm text-gray-400">Discover top fan arts, beat clips, esports highlights, and photography from ZENOVA members.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="showcase-container">
+        <!-- Injected Showcase Posts -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-16 border-t border-purple-900/40 bg-[#080212]/90 backdrop-blur-xl py-12 px-4 lg:px-8 relative z-10 text-xs text-gray-400">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="font-extrabold text-lg tracking-widest text-white font-mono">ZENOVA</span>
+        </div>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          The premier cyber community bridging gamers, artists, producers, scholars, and webtoon enthusiasts worldwide.
+        </p>
+      </div>
+
+      <div>
+        <div class="font-bold text-white font-mono uppercase tracking-wider mb-3">Official Links</div>
+        <ul class="space-y-2">
+          <li><a href="https://discord.gg/zenova" target="_blank" class="hover:text-[#00f0ff] flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Discord Megaserver</a></li>
+          <li><a href="https://chat.whatsapp.com/zenova-official" target="_blank" class="hover:text-[#00f0ff] flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> WhatsApp Community</a></li>
+          <li><a href="https://instagram.com/zenova_community" target="_blank" class="hover:text-[#00f0ff] flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> Instagram Channel</a></li>
+          <li><a href="https://tiktok.com/@zenova_official" target="_blank" class="hover:text-[#00f0ff] flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> TikTok Group</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-bold text-white font-mono uppercase tracking-wider mb-3">Top Spheres</div>
+        <ul class="space-y-2">
+          <li><button onclick="switchTab('categories')" class="hover:text-[#ff007f]">Gaming & Esports</button></li>
+          <li><button onclick="switchTab('categories')" class="hover:text-[#ff007f]">Music & Beats</button></li>
+          <li><button onclick="switchTab('categories')" class="hover:text-[#ff007f]">Anime & Manhwa</button></li>
+          <li><button onclick="switchTab('categories')" class="hover:text-[#ff007f]">Education & Tech</button></li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <div class="font-bold text-white font-mono uppercase tracking-wider">Newsletter Relay</div>
+        <p class="text-gray-400">Get direct event reminders & custom invite links.</p>
+        <div class="flex gap-2">
+          <input type="email" placeholder="Enter email..." class="w-full bg-purple-950/40 border border-purple-800/50 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none" />
+          <button onclick="alert('Subscribed to ZENOVA Relay Alerts!')" class="px-3 py-2 rounded-xl font-bold bg-[#00f0ff] text-black hover:bg-cyan-300">
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto pt-8 mt-8 border-t border-purple-900/40 text-center text-[11px] font-mono text-gray-500">
+      © 2026 ZENOVA COMMUNITY PORTAL. ALL RIGHTS RESERVED. POWERED BY CYBER MATRIX ENGINE.
+    </div>
+  </footer>
+
+  <!-- STAFF DIRECT MESSAGE MODAL -->
+  <div id="staff-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#0f051d] border border-purple-800/60 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+      <button onclick="closeStaffModal()" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-full bg-purple-950/40 border border-purple-800/40">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <img id="staff-modal-img" src="" class="w-12 h-12 rounded-xl border border-[#00f0ff] object-cover" />
+        <div>
+          <h3 id="staff-modal-name" class="text-base font-bold text-white"></h3>
+          <div id="staff-modal-role" class="text-xs font-mono text-[#00f0ff]"></div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-mono text-gray-300">Direct Staff Inquiry Relay:</label>
+        <textarea id="staff-msg-input" rows="4" placeholder="Write your message here..." class="w-full bg-purple-950/40 border border-purple-800/50 rounded-xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#00f0ff]"></textarea>
+      </div>
+
+      <button onclick="sendStaffMessage()" class="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-[#00f0ff] to-[#ff007f] text-slate-950 flex items-center justify-center gap-2">
+        <i data-lucide="send" class="w-4 h-4"></i>
+        <span>Send Direct Message</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ONBOARDING & QUICK JOIN MODAL -->
+  <div id="join-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#0f051d] border border-purple-800/60 rounded-3xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative">
+      <button onclick="closeJoinModal()" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-full bg-purple-950/40 border border-purple-800/40">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="space-y-2">
+        <div class="text-xl font-black text-white font-mono">ZENOVA DIRECT ONBOARDING</div>
+        <p class="text-xs text-gray-400">Select your social platform below to join immediately.</p>
+      </div>
+
+      <div class="space-y-2" id="modal-hubs-list">
+        <!-- Injected Direct Links -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- 1. DATA STRUCTURES ---
+    const platformHubs = [
+      {
+        id: 'discord',
+        name: 'Discord Megaserver',
+        type: 'Primary Voice & Gaming Lounge',
+        members: '24,850+ Online',
+        desc: '24/7 active voice channels, live esports matches, beats lounge & gaming parties.',
+        badge: 'Main Core',
+        link: 'https://discord.gg/zenova',
+        features: ['24/7 Voice Rooms', 'Custom Bot Games', 'Stage Talk Shows']
+      },
+      {
+        id: 'whatsapp',
+        name: 'WhatsApp Community',
+        type: 'Announcements & Local Groups',
+        members: '12,400+ Members',
+        desc: 'Instant updates, daily memes, local sports meetup chats, and sub-group channels.',
+        badge: 'Instant Alert',
+        link: 'https://chat.whatsapp.com/zenova-official',
+        features: ['Direct Mobile Updates', 'Sub-Interest Chats', 'Instant Polls']
+      },
+      {
+        id: 'instagram',
+        name: 'Instagram Channel & Group',
+        type: 'Broadcasting & Visual Highlights',
+        members: '38.5k Followers',
+        desc: 'Weekly member highlight reels, photography contests, and direct channel broadcasts.',
+        badge: 'Visual Hub',
+        link: 'https://instagram.com/zenova_community',
+        features: ['Daily Highlights', 'Behind-the-Scenes', 'Member Spotlights']
+      },
+      {
+        id: 'tiktok',
+        name: 'TikTok Group & Channel',
+        type: 'Short Clips & Anime Edits',
+        members: '52.1k Followers',
+        desc: 'Trending gaming highlights, anime edits, short tutorials, and creative challenges.',
+        badge: 'Trending Content',
+        link: 'https://tiktok.com/@zenova_official',
+        features: ['Esports Clips', 'Manhwa Reviews', 'Speed Arts']
+      },
+      {
+        id: 'facebook',
+        name: 'Facebook Group & Page',
+        type: 'Long-form Discussions & Events',
+        members: '18.9k Members',
+        desc: 'Community forums, trade/buy-sell zones, event RSVP, and educational guides.',
+        badge: 'Forum Lounge',
+        link: 'https://facebook.com/groups/zenova.official',
+        features: ['Guides & Articles', 'Community Events', 'Big Discussions']
+      }
+    ];
+
+    const categories = [
+      { id: 'gaming', title: 'Gaming & Esports', icon: 'gamepad-2', count: '8,420 Active', desc: 'LFG lobbies, Valorant/CS2 scrims, casual party games, and tournament brackets.', subChannels: ['#lfg-ranked', '#clips-and-highlights', '#tournaments'] },
+      { id: 'music', title: 'Music & Beats', icon: 'music', count: '3,110 Active', desc: 'Music production feedback, beatmaking jams, live listening parties, and vocal covers.', subChannels: ['#producer-corner', '#jam-sessions', '#listening-party'] },
+      { id: 'education', title: 'Education & Tech', icon: 'graduation-cap', count: '4,520 Active', desc: 'Silent study sessions, coding help, AI research, academic resources, and career growth.', subChannels: ['#coding-help', '#study-pomodoro', '#resource-library'] },
+      { id: 'sports', title: 'Sports & Fitness', icon: 'trophy', count: '2,890 Active', desc: 'Live match watch parties, football/basketball banter, fitness goals, and workout tips.', subChannels: ['#match-day-chat', '#gym-motivation', '#f1-paddock'] },
+      { id: 'creativity', title: 'Creativity & Digital Art', icon: 'palette', count: '3,840 Active', desc: '3D modeling, Blender, UI/UX design, concept art showcases, and monthly art prompts.', subChannels: ['#art-showcase', '#critique-corner', '#monthly-contest'] },
+      { id: 'photography', title: 'Photography & Optics', icon: 'camera', count: '2,150 Active', desc: 'Lightroom presets, camera gear reviews, street photography, and weekly photo prompts.', subChannels: ['#photo-of-the-day', '#gear-discussion', '#preset-sharing'] },
+      { id: 'videography', title: 'Videography & Editing', icon: 'video', count: '1,980 Active', desc: 'After Effects, Premiere Pro, color grading, VFX breakdowns, and YouTube creator tips.', subChannels: ['#edit-showcase', '#project-feedback', '#vfx-lab'] },
+      { id: 'anime', title: 'Anime & Manga', icon: 'tv', count: '6,730 Active', desc: 'Weekly episode reactions, seasonal tier lists, cosplay showcases, and watch-alongs.', subChannels: ['#anime-spoilers', '#watch-party', '#cosplay-gallery'] },
+      { id: 'manhwa', title: 'Manhwa & Webtoons', icon: 'book-open', count: '4,120 Active', desc: 'Solo Leveling, Tower of God chapter drops, hidden gem webtoons, and theory crafting.', subChannels: ['#chapter-drops', '#hidden-gems', '#theory-crafting'] },
+      { id: 'fun', title: 'Fun & Chill Lounge', icon: 'sparkles', count: '9,500+ Active', desc: 'Memes, daily trivia mini-games, pet photos, late-night shower thoughts, and casual banter.', subChannels: ['#memes-only', '#pet-pics', '#daily-trivia'] }
+    ];
+
+    const operationTeam = {
+      founder: { name: 'ZENOVA_Founder', handle: '@zenova_owner', role: 'Owner & Founder', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80', status: 'online', specialty: 'Visionary & Ecosystem Creator', bio: 'Pioneer of the ZENOVA multi-platform cyber realm. Oversees all platforms, partnerships, and core ecosystem expansions.', focusArea: 'Community Architecture' },
+      administrator: { name: 'Aero_Admin', handle: '@aero_zenova', role: 'Administrator', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80', status: 'online', specialty: 'Operations & Server Architecture', bio: 'Manages platform security, bot systems, staff coordination, and official event setups across Discord and WhatsApp.', focusArea: 'Server Security & Events' },
+      moderators: [
+        { name: 'CyberKitsune', handle: '@kitsune_mod', role: 'Moderator', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Gaming & Tournaments', bio: 'Oversees esports brackets, competitive gaming LFG, and fair play in voice channels.' },
+        { name: 'Lumina_Plow', handle: '@lumina_mod', role: 'Moderator', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Music & Beat Lab', bio: 'Curates listening parties, beat flips, and manages vocal room guidelines.' },
+        { name: 'Vortex_Zen', handle: '@vortex_mod', role: 'Moderator', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80', status: 'busy', specialty: 'Anime & Manhwa Lounge', bio: 'Keeps spoiler tags enforced, hosts weekly anime streams and webtoon chapter drops.' },
+        { name: 'Astra_Design', handle: '@astra_mod', role: 'Moderator', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Creativity & Arts', bio: 'Monitors art showcases, monthly prompts, and feedback corners.' },
+        { name: 'Shutter_Pulse', handle: '@shutter_mod', role: 'Moderator', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80', status: 'offline', specialty: 'Photography & Optics', bio: 'Guides camera enthusiasts and manages weekly photo submission showcases.' },
+        { name: 'TechScholar', handle: '@tech_mod', role: 'Moderator', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Education & Tech', bio: 'Maintains study pomodoro rooms, code help guidelines, and resource links.' }
+      ],
+      helpers: [
+        { name: 'Nova_Spark', handle: '@nova_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Welcome & Onboarding' },
+        { name: 'Rogue_Echo', handle: '@rogue_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'WhatsApp Community LFG' },
+        { name: 'Sakura_Vibes', handle: '@sakura_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80', status: 'busy', specialty: 'Instagram & TikTok Clips' },
+        { name: 'Byte_Knight', handle: '@byte_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Discord Voice Setup' },
+        { name: 'Aura_Pixel', handle: '@aura_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Art Contest Support' },
+        { name: 'Beat_Drifter', handle: '@beat_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', status: 'offline', specialty: 'Music Lounge Support' },
+        { name: 'Shadow_Reader', handle: '@shadow_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Manhwa Spoilers Help' },
+        { name: 'FitPulse_Sam', handle: '@fit_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'Sports Chat Guidance' },
+        { name: 'CineEdits_Leo', handle: '@cine_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80', status: 'busy', specialty: 'Video Editing Support' },
+        { name: 'Chill_BotGuy', handle: '@chill_hlp', role: 'Helper', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80', status: 'online', specialty: 'General Fun & Memes' }
+      ]
+    };
+
+    const events = [
+      { id: 1, title: 'ZENOVA Valorant 5v5 Cyber Cup', category: 'Gaming', date: 'Sat, Oct 31 • 18:00 UTC', platform: 'Discord Voice & Twitch', prize: 'Custom Winner Role + Champion Badge', attendees: 142, tag: 'Tournament' },
+      { id: 2, title: 'Anime Stream Night: Chainsaw Man / JJK Watchalong', category: 'Anime', date: 'Sun, Nov 1 • 20:00 UTC', platform: 'Discord Stage Room', prize: 'Exclusive Poster Giveaway', attendees: 210, tag: 'Watch Party' },
+      { id: 3, title: 'Neon Cyberpunk Art Contest Submission Deadline', category: 'Creativity', date: 'Nov 5 • 23:59 UTC', platform: 'Instagram & Discord #art-showcase', prize: 'Zenova Master Artist Badge', attendees: 88, tag: 'Contest' },
+      { id: 4, title: 'Music Producer Beat Battle & Vocal Jam', category: 'Music', date: 'Fri, Nov 10 • 19:30 UTC', platform: 'WhatsApp Live & Discord VC', prize: 'Community Track Placement', attendees: 64, tag: 'Live Session' }
+    ];
+
+    const showcases = [
+      { id: 1, author: 'Astra_FX', badge: 'Sphere Master', title: 'ZENOVA Neon City 3D Render', category: 'Creativity', likes: 342, comments: 28, image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80', time: '2 hours ago', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80' },
+      { id: 2, author: 'Kaelen_Beats', badge: 'Music Lead', title: 'Cyberpunk Synthwave Beat Flip [Demo]', category: 'Music', likes: 215, comments: 19, image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80', time: '5 hours ago', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80' },
+      { id: 3, author: 'Rogue_Sniper', badge: 'Gaming Elite', title: '1v5 Clutch in Esports Semi-Finals', category: 'Gaming', likes: 512, comments: 64, image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=80', time: '1 day ago', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80' }
+    ];
+
+    // --- 2. INITIALIZATION & DOM RENDERING ---
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initBackgroundCanvas();
+      renderHomeHubs();
+      renderHomeSpheres();
+      renderAllHubs();
+      renderAllSpheres();
+      renderOperationTeam();
+      renderEvents();
+      renderShowcases();
+      renderModalHubs();
+    });
+
+    // --- 3. TAB NAVIGATION ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.className = 'nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-gray-400 hover:text-white hover:bg-purple-900/30';
+      });
+
+      const activeNav = document.getElementById(`nav-${tabId}`);
+      if (activeNav) {
+        activeNav.className = 'nav-btn flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all text-white bg-gradient-to-r from-[#00f0ff] to-purple-600 font-bold shadow-lg shadow-cyan-500/20';
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- 4. RENDERERS ---
+    function copyLink(text) {
+      navigator.clipboard.writeText(text);
+      alert('Link copied to clipboard: ' + text);
+    }
+
+    function renderHomeHubs() {
+      const container = document.getElementById('home-hubs-container');
+      container.innerHTML = platformHubs.slice(0, 3).map(hub => `
+        <div class="p-5 rounded-2xl bg-purple-950/20 backdrop-blur-xl border border-purple-800/40 hover:border-[#00f0ff]/50 space-y-4 flex flex-col justify-between transition-all">
+          <div class="space-y-2">
+            <div class="flex justify-between items-start">
+              <span class="px-2.5 py-0.5 rounded-full bg-purple-900/50 border border-purple-700/40 text-[10px] font-mono text-[#00f0ff]">${hub.badge}</span>
+              <span class="text-xs font-mono text-emerald-400 flex items-center gap-1">● ${hub.members}</span>
+            </div>
+            <h3 class="text-lg font-bold text-white">${hub.name}</h3>
+            <p class="text-xs text-gray-300">${hub.desc}</p>
+          </div>
+          <div class="pt-3 border-t border-purple-900/40 flex items-center justify-between gap-2">
+            <button onclick="copyLink('${hub.link}')" class="p-2 rounded-lg bg-purple-900/40 text-gray-300 text-xs font-mono flex items-center gap-1 hover:text-white">Copy Link</button>
+            <a href="${hub.link}" target="_blank" class="px-4 py-2 rounded-lg font-bold text-xs bg-gradient-to-r from-[#00f0ff] to-purple-600 text-white">Join Hub</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHomeSpheres() {
+      const container = document.getElementById('home-spheres-container');
+      container.innerHTML = categories.slice(0, 4).map(cat => `
+        <div onclick="switchTab('categories')" class="p-5 rounded-2xl bg-purple-950/20 border border-purple-800/40 hover:border-[#00f0ff]/50 cursor-pointer space-y-3 group">
+          <div class="flex justify-between items-center">
+            <div class="p-2.5 rounded-xl bg-[#00f0ff] text-black font-bold">
+              <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[10px] font-mono text-[#00f0ff]">${cat.count}</span>
+          </div>
+          <h3 class="text-base font-bold text-white group-hover:text-[#00f0ff] transition-colors">${cat.title}</h3>
+          <p class="text-xs text-gray-400 line-clamp-2">${cat.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderAllHubs() {
+      const container = document.getElementById('all-hubs-container');
+      container.innerHTML = platformHubs.map(hub => `
+        <div class="p-6 rounded-3xl bg-purple-950/20 border border-purple-800/40 hover:border-[#00f0ff]/50 space-y-5 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="px-3 py-1 rounded-full bg-purple-900/60 border border-purple-700/50 text-xs font-mono text-[#00f0ff] font-bold">${hub.badge}</span>
+              <span class="text-xs font-mono text-emerald-400 font-bold">● ${hub.members}</span>
+            </div>
+            <h3 class="text-2xl font-bold text-white">${hub.name}</h3>
+            <div class="text-xs font-mono text-gray-400">${hub.type}</div>
+            <p class="text-xs text-gray-300">${hub.desc}</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              ${hub.features.map(f => `<span class="text-xs px-2.5 py-1 rounded-lg bg-black/40 border border-purple-800/40 text-purple-200">✓ ${f}</span>`).join('')}
+            </div>
+          </div>
+          <div class="pt-4 border-t border-purple-900/40 flex items-center justify-between gap-3">
+            <button onclick="copyLink('${hub.link}')" class="px-4 py-2 rounded-xl bg-purple-900/50 text-xs font-mono">Copy Link</button>
+            <a href="${hub.link}" target="_blank" class="px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-[#00f0ff] via-purple-500 to-[#ff007f] text-black">Join Official Link</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAllSpheres() {
+      const container = document.getElementById('all-spheres-container');
+      container.innerHTML = categories.map(cat => `
+        <div class="p-6 rounded-3xl bg-purple-950/20 border border-purple-800/40 hover:border-[#00f0ff]/50 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <div class="p-3 rounded-2xl bg-[#00f0ff] text-black">
+                <i data-lucide="${cat.icon}" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono text-[#00f0ff] bg-cyan-950/60 border border-cyan-800 px-2.5 py-1 rounded-full">${cat.count}</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-[#00f0ff] transition-colors">${cat.title}</h3>
+            <p class="text-xs text-gray-300">${cat.desc}</p>
+            <div class="space-y-2 pt-2">
+              <div class="text-[10px] font-mono text-gray-400 uppercase">Sub-Channels:</div>
+              <div class="flex flex-wrap gap-1.5">
+                ${cat.subChannels.map(s => `<span class="text-xs font-mono px-2 py-1 rounded bg-black/50 border border-purple-800/40 text-[#00f0ff]">${s}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+          <button onclick="openJoinModal()" class="w-full py-2.5 rounded-xl font-bold text-xs bg-purple-900/50 hover:bg-[#00f0ff] hover:text-black border border-purple-700/50 text-white transition-all">Join ${cat.title} Hub</button>
+        </div>
+      `).join('');
+    }
+
+    function renderOperationTeam() {
+      // 1. Executive Lead
+      const execContainer = document.getElementById('executive-staff-container');
+      execContainer.innerHTML = `
+        <!-- FOUNDER -->
+        <div class="p-6 rounded-3xl bg-gradient-to-br from-amber-950/40 via-purple-950/30 to-slate-900/80 border border-amber-500/50 shadow-xl space-y-4 relative overflow-hidden">
+          <div class="absolute top-0 right-0 px-4 py-1 rounded-bl-2xl bg-amber-500 text-slate-950 font-black text-[10px] font-mono">OWNER & FOUNDER</div>
+          <div class="flex items-center gap-4 pt-2">
+            <img src="${operationTeam.founder.avatar}" class="w-16 h-16 rounded-2xl border-2 border-amber-400 object-cover" />
+            <div>
+              <h4 className="text-xl font-black text-white">${operationTeam.founder.name}</h4>
+              <div class="text-xs font-mono text-amber-300">${operationTeam.founder.handle}</div>
+              <div class="text-[11px] text-gray-400 font-mono">Specialty: ${operationTeam.founder.specialty}</div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-300">${operationTeam.founder.bio}</p>
+          <button onclick="openStaffModal('${operationTeam.founder.name}', '${operationTeam.founder.role}', '${operationTeam.founder.avatar}')" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 text-black">Contact Owner</button>
+        </div>
+
+        <!-- ADMIN -->
+        <div class="p-6 rounded-3xl bg-gradient-to-br from-pink-950/40 via-purple-950/30 to-slate-900/80 border border-pink-500/50 shadow-xl space-y-4 relative overflow-hidden">
+          <div class="absolute top-0 right-0 px-4 py-1 rounded-bl-2xl bg-pink-500 text-white font-black text-[10px] font-mono">ADMINISTRATOR</div>
+          <div class="flex items-center gap-4 pt-2">
+            <img src="${operationTeam.administrator.avatar}" class="w-16 h-16 rounded-2xl border-2 border-pink-400 object-cover" />
+            <div>
+              <h4 className="text-xl font-black text-white">${operationTeam.administrator.name}</h4>
+              <div class="text-xs font-mono text-pink-300">${operationTeam.administrator.handle}</div>
+              <div class="text-[11px] text-gray-400 font-mono">Specialty: ${operationTeam.administrator.specialty}</div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-300">${operationTeam.administrator.bio}</p>
+          <button onclick="openStaffModal('${operationTeam.administrator.name}', '${operationTeam.administrator.role}', '${operationTeam.administrator.avatar}')" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#ff007f] text-white">Contact Admin</button>
+        </div>
+      `;
+
+      // 2. Moderators
+      const modsContainer = document.getElementById('moderators-container');
+      modsContainer.innerHTML = operationTeam.moderators.map(m => `
+        <div class="p-5 rounded-2xl bg-purple-950/20 border border-cyan-500/30 hover:border-[#00f0ff] space-y-3 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="px-2.5 py-0.5 rounded bg-cyan-950 border border-[#00f0ff]/40 text-[10px] font-mono text-[#00f0ff] font-bold">MODERATOR</span>
+              <span class="text-[10px] font-mono text-gray-400">● ${m.status}</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <img src="${m.avatar}" class="w-12 h-12 rounded-xl border border-cyan-500/40 object-cover" />
+              <div>
+                <div class="text-sm font-bold text-white">${m.name}</div>
+                <div class="text-[10px] font-mono text-[#00f0ff]">${m.handle}</div>
+              </div>
+            </div>
+            <div class="text-xs font-semibold text-purple-300">${m.specialty}</div>
+            <p class="text-[11px] text-gray-300">${m.bio}</p>
+          </div>
+          <button onclick="openStaffModal('${m.name}', 'Moderator', '${m.avatar}')" class="w-full py-1.5 rounded-lg text-xs font-bold bg-purple-900/40 hover:bg-[#00f0ff] hover:text-black text-[#00f0ff] transition-all">Message Mod</button>
+        </div>
+      `).join('');
+
+      // 3. Helpers
+      const helpersContainer = document.getElementById('helpers-container');
+      helpersContainer.innerHTML = operationTeam.helpers.map(h => `
+        <div class="p-4 rounded-xl bg-purple-950/20 border border-emerald-500/20 hover:border-emerald-400 space-y-2 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="px-2 py-0.2 rounded bg-emerald-950 text-[9px] font-mono text-emerald-300">HELPER</span>
+              <span class="text-[9px] text-gray-400">● ${h.status}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <img src="${h.avatar}" class="w-8 h-8 rounded-lg object-cover" />
+              <div class="overflow-hidden">
+                <div class="text-xs font-bold text-white truncate">${h.name}</div>
+                <div class="text-[9px] font-mono text-emerald-400 truncate">${h.handle}</div>
+              </div>
+            </div>
+            <div class="text-[10px] text-gray-300">${h.specialty}</div>
+          </div>
+          <button onclick="openStaffModal('${h.name}', 'Helper', '${h.avatar}')" class="w-full py-1 text-[10px] font-mono bg-purple-900/30 text-emerald-300 hover:bg-emerald-500 hover:text-black rounded">Ask Helper</button>
+        </div>
+      `).join('');
+    }
+
+    function renderEvents() {
+      const container = document.getElementById('events-container');
+      container.innerHTML = events.map(evt => `
+        <div class="p-6 rounded-3xl bg-purple-950/20 border border-purple-800/40 space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="px-3 py-1 rounded-full bg-amber-950 border border-amber-800 text-xs font-mono text-amber-300 font-bold">${evt.tag}</span>
+              <span class="text-xs font-mono text-[#00f0ff]">${evt.category}</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">${evt.title}</h3>
+            <div class="space-y-1.5 text-xs text-gray-300 font-mono">
+              <div>📅 ${evt.date}</div>
+              <div>📍 Platform: ${evt.platform}</div>
+              <div class="text-emerald-400 font-bold">🏆 Prize: ${evt.prize}</div>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-purple-900/40 flex items-center justify-between">
+            <span class="text-xs text-gray-400 font-mono">${evt.attendees} Attending</span>
+            <button onclick="openJoinModal()" class="px-5 py-2 rounded-xl font-bold text-xs bg-amber-500 text-black">RSVP Event</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderShowcases() {
+      const container = document.getElementById('showcase-container');
+      container.innerHTML = showcases.map(post => `
+        <div class="rounded-3xl bg-purple-950/20 border border-purple-800/40 overflow-hidden space-y-3 flex flex-col justify-between">
+          <img src="${post.image}" class="w-full h-48 object-cover" />
+          <div class="p-4 space-y-3">
+            <div class="flex items-center gap-3">
+              <img src="${post.avatar}" class="w-8 h-8 rounded-full border border-[#00f0ff]" />
+              <div>
+                <div class="text-xs font-bold text-white">${post.author}</div>
+                <div class="text-[10px] text-gray-500 font-mono">${post.time}</div>
+              </div>
+            </div>
+            <h4 class="text-sm font-bold text-white">${post.title}</h4>
+            <div class="flex items-center justify-between text-xs text-gray-400 pt-2 border-t border-purple-900/40 font-mono">
+              <span>❤️ ${post.likes}</span>
+              <span>💬 ${post.comments} Comments</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderModalHubs() {
+      const container = document.getElementById('modal-hubs-list');
+      container.innerHTML = platformHubs.map(h => `
+        <div class="p-3 rounded-2xl bg-purple-950/40 border border-purple-800/40 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-white">${h.name}</div>
+            <div class="text-[10px] text-gray-400">${h.members}</div>
+          </div>
+          <a href="${h.link}" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#00f0ff] text-black">Join Direct</a>
+        </div>
+      `).join('');
+    }
+
+    // --- 5. SEARCH & QUIZ LOGIC ---
+    function filterSpheres() {
+      const query = document.getElementById('sphere-search').value.toLowerCase();
+      const container = document.getElementById('all-spheres-container');
+      const filtered = categories.filter(c => c.title.toLowerCase().includes(query) || c.desc.toLowerCase().includes(query));
+      
+      container.innerHTML = filtered.map(cat => `
+        <div class="p-6 rounded-3xl bg-purple-950/20 border border-purple-800/40 hover:border-[#00f0ff]/50 space-y-4 flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <div class="p-3 rounded-2xl bg-[#00f0ff] text-black">
+                <i data-lucide="${cat.icon}" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-mono text-[#00f0ff] bg-cyan-950/60 border border-cyan-800 px-2.5 py-1 rounded-full">${cat.count}</span>
+            </div>
+            <h3 class="text-xl font-bold text-white group-hover:text-[#00f0ff] transition-colors">${cat.title}</h3>
+            <p class="text-xs text-gray-300">${cat.desc}</p>
+          </div>
+          <button onclick="openJoinModal()" class="w-full py-2.5 rounded-xl font-bold text-xs bg-purple-900/50 text-white">Join Hub</button>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function runQuiz(sphere) {
+      document.getElementById('quiz-options').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('quiz-matched-text').innerText = '✨ Matched Sphere: ' + sphere;
+    }
+
+    function resetQuiz() {
+      document.getElementById('quiz-options').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+    }
+
+    // --- 6. MODAL CONTROLS ---
+    function openStaffModal(name, role, avatar) {
+      document.getElementById('staff-modal-name').innerText = name;
+      document.getElementById('staff-modal-role').innerText = role;
+      document.getElementById('staff-modal-img').src = avatar;
+      document.getElementById('staff-modal').classList.remove('hidden');
+    }
+
+    function closeStaffModal() {
+      document.getElementById('staff-modal').classList.add('hidden');
+    }
+
+    function sendStaffMessage() {
+      const msg = document.getElementById('staff-msg-input').value;
+      if (!msg) return alert('Please enter a message before sending.');
+      alert('Message dispatched to staff member via ZENOVA Relay!');
+      document.getElementById('staff-msg-input').value = '';
+      closeStaffModal();
+    }
+
+    function openJoinModal() {
+      document.getElementById('join-modal').classList.remove('hidden');
+    }
+
+    function closeJoinModal() {
+      document.getElementById('join-modal').classList.add('hidden');
+    }
+
+    let isAudioPlaying = false;
+    function toggleAudio() {
+      isAudioPlaying = !isAudioPlaying;
+      const btnText = document.getElementById('radio-btn-text');
+      if (btnText) btnText.innerText = isAudioPlaying ? 'Mute Radio Stream' : 'Play Cyber Beats';
+      alert(isAudioPlaying ? 'ZENOVA Ambient Cyber Lo-Fi Radio Stream Started!' : 'Radio Stream Muted.');
+    }
+
+    // --- 7. BACKGROUND CANVAS PARTICLES ---
+    function initBackgroundCanvas() {
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const particles = Array.from({ length: 40 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2 + 1,
+        color: Math.random() > 0.5 ? '#00f0ff' : '#ff007f'
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(139, 92, 246, ${0.12 * (1 - dist / 120)})`;
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+  </script>
+</body>
+</html>
