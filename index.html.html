@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZENOVA — The Ultimate Multi-Category Community Hub</title>
+  
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Linked CSS from css/ folder -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Animated Particle Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand">
+        <!-- ZENOVA Exact Logo SVG -->
+        <svg class="logo-svg" viewBox="0 0 1000 1000">
+          <defs>
+            <radialGradient id="sphereGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#4a0e82" stop-opacity="0.9"/>
+              <stop offset="60%" stop-color="#180731" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#05010a" stop-opacity="0.98"/>
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="8" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <circle cx="500" cy="500" r="480" fill="url(#sphereGrad)" stroke="#00f0ff" stroke-width="6" stroke-opacity="0.3"/>
+          <!-- Graduation Cap -->
+          <g filter="url(#glow)">
+            <polygon points="200,380 300,330 400,380 300,430" fill="none" stroke="#00f0ff" stroke-width="12"/>
+            <polyline points="220,390 220,440 300,475 380,440 380,390" fill="none" stroke="#00f0ff" stroke-width="10"/>
+            <line x1="380" y1="390" x2="395" y2="450" stroke="#00f0ff" stroke-width="8"/>
+            <circle cx="395" cy="460" r="10" fill="#00f0ff"/>
+          </g>
+          <!-- ZENOVA Text -->
+          <g filter="url(#glow)">
+            <path d="M150,560 L240,560 L150,660 L240,660" fill="none" stroke="#00f0ff" stroke-width="26" stroke-linejoin="round"/>
+            <path d="M180,610 L250,610" fill="none" stroke="#00f0ff" stroke-width="18"/>
+            <path d="M280,560 L360,560 M280,610 L340,610 M280,660 L360,660 M280,560 L280,660" fill="none" stroke="#00f0ff" stroke-width="26"/>
+            <path d="M390,660 L390,560 L470,660 L470,560" fill="none" stroke="#00f0ff" stroke-width="26"/>
+            <!-- O with Ghost -->
+            <circle cx="560" cy="610" r="50" fill="none" stroke="#00f0ff" stroke-width="26"/>
+            <path d="M545,615 C545,590 575,590 575,615 L575,630 L568,623 L560,630 L552,623 L545,630 Z" fill="none" stroke="#ff007f" stroke-width="8"/>
+            <circle cx="553" cy="605" r="3" fill="#ff007f"/>
+            <circle cx="567" cy="605" r="3" fill="#ff007f"/>
+            <path d="M640,560 L690,660 L740,560" fill="none" stroke="#00f0ff" stroke-width="26"/>
+            <path d="M760,660 L810,560 L860,660 M780,630 L840,630" fill="none" stroke="#00f0ff" stroke-width="26"/>
+          </g>
+          <!-- Gaming Mouse -->
+          <g filter="url(#glow)">
+            <rect x="475" y="680" width="50" height="80" rx="25" fill="none" stroke="#ff007f" stroke-width="10"/>
+            <line x1="500" y1="680" x2="500" y2="710" stroke="#ff007f" stroke-width="8"/>
+            <path d="M500,680 Q500,650 560,610" fill="none" stroke="#ff007f" stroke-width="8" stroke-dasharray="6,6"/>
+          </g>
+        </svg>
+        <span class="brand-text">ZENOVA</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#hubs" class="nav-link">Social Hubs</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="#team" class="nav-link">Operation Team</a>
+        <a href="#rules" class="nav-link">Community Rules</a>
+      </nav>
+
+      <a href="#hubs" class="btn-primary">
+        <i data-lucide="sparkles"></i>
+        <span>Join ZENOVA</span>
+      </a>
+
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="hero-glow"></div>
+      <div class="container hero-content">
+        <span class="badge-tag"><i data-lucide="globe"></i> GLOBAL COMMUNITY NETWORK</span>
+        <h1 class="hero-title">WELCOME TO <span class="text-neon-cyan">ZENOVA</span></h1>
+        <p class="hero-subtitle">
+          The ultimate futuristic ecosystem connecting gamers, creators, students, anime lovers, and artists across multiple platforms into one powerful community.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#hubs" class="btn-primary btn-lg">
+            <i data-lucide="users"></i>
+            <span>Explore Social Channels</span>
+          </a>
+          <a href="#categories" class="btn-secondary btn-lg">
+            <i data-lucide="grid"></i>
+            <span>Browse 10+ Categories</span>
+          </a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-value text-neon-cyan">10,000+</span>
+            <span class="stat-label">Active Members</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value text-neon-pink">10</span>
+            <span class="stat-label">Specialized Categories</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value text-neon-cyan">18</span>
+            <span class="stat-label">Operation Staff</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value text-neon-pink">5</span>
+            <span class="stat-label">Official Platforms</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Official Social Platforms Hub -->
+    <section id="hubs" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">OFFICIAL <span class="text-neon-cyan">PLATFORM HUBS</span></h2>
+          <p class="section-subtitle">Connect with ZENOVA across your favorite networks and groups</p>
+        </div>
+
+        <div class="hubs-grid">
+          <!-- Discord -->
+          <div class="hub-card platform-discord">
+            <div class="hub-icon"><i data-lucide="disc"></i></div>
+            <div class="hub-info">
+              <h3>Discord Megaserver</h3>
+              <p>Voice chats, live streams, bots, custom roles, and category hangouts.</p>
+              <div class="hub-meta"><span>5,400+ Members</span> • <span class="online-indicator">Live</span></div>
+            </div>
+            <a href="https://discord.gg" target="_blank" rel="noopener" class="btn-hub">
+              <span>Join Discord</span>
+              <i data-lucide="external-link"></i>
+            </a>
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="hub-card platform-whatsapp">
+            <div class="hub-icon"><i data-lucide="message-square"></i></div>
+            <div class="hub-info">
+              <h3>WhatsApp Community</h3>
+              <p>Instant announcement channel and interest-based sub-groups.</p>
+              <div class="hub-meta"><span>2,800+ Members</span></div>
+            </div>
+            <a href="https://whatsapp.com" target="_blank" rel="noopener" class="btn-hub">
+              <span>Join WhatsApp</span>
+              <i data-lucide="external-link"></i>
+            </a>
+          </div>
+
+          <!-- Instagram -->
+          <div class="hub-card platform-instagram">
+            <div class="hub-icon"><i data-lucide="instagram"></i></div>
+            <div class="hub-info">
+              <h3>Instagram Group & Channel</h3>
+              <p>Behind the scenes, creative highlights, member shoutouts & stories.</p>
+              <div class="hub-meta"><span>3,200+ Followers</span></div>
+            </div>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="btn-hub">
+              <span>Follow & Join</span>
+              <i data-lucide="external-link"></i>
+            </a>
+          </div>
+
+          <!-- TikTok -->
+          <div class="hub-card platform-tiktok">
+            <div class="hub-icon"><i data-lucide="video"></i></div>
+            <div class="hub-info">
+              <h3>TikTok Group & Channel</h3>
+              <p>Gaming clips, short edits, tutorials, anime memes, and video trends.</p>
+              <div class="hub-meta"><span>4,100+ Followers</span></div>
+            </div>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="btn-hub">
+              <span>Watch & Join</span>
+              <i data-lucide="external-link"></i>
+            </a>
+          </div>
+
+          <!-- Facebook -->
+          <div class="hub-card platform-facebook">
+            <div class="hub-icon"><i data-lucide="facebook"></i></div>
+            <div class="hub-info">
+              <h3>Facebook Group & Page</h3>
+              <p>Community posts, long discussions, image galleries, and event news.</p>
+              <div class="hub-meta"><span>1,900+ Members</span></div>
+            </div>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="btn-hub">
+              <span>Join Group</span>
+              <i data-lucide="external-link"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">COMMUNITY <span class="text-neon-pink">CATEGORIES</span></h2>
+          <p class="section-subtitle">Discover discussions and spaces tailored specifically to your passions</p>
+        </div>
+
+        <div class="category-filter">
+          <input type="text" id="cat-search" placeholder="Search categories..." class="search-input">
+        </div>
+
+        <div class="categories-grid" id="categories-grid">
+          <!-- Gaming -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="gamepad-2" class="cat-icon"></i>
+              <span class="cat-badge">Popular</span>
+            </div>
+            <h3>Gaming</h3>
+            <p>Esports tournaments, party games, guides, LFG matchmaking, and clip shares.</p>
+          </div>
+
+          <!-- Music -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="music" class="cat-icon"></i>
+            </div>
+            <h3>Music</h3>
+            <p>Beat production, playlist swapping, cover songs, synthwave, and listening parties.</p>
+          </div>
+
+          <!-- Education -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="graduation-cap" class="cat-icon"></i>
+            </div>
+            <h3>Education</h3>
+            <p>Study groups, coding, language exchange, science discussions, and skill sharing.</p>
+          </div>
+
+          <!-- Sports -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="trophy" class="cat-icon"></i>
+            </div>
+            <h3>Sports</h3>
+            <p>Football, basketball, fitness training, match commentary, and fantasy leagues.</p>
+          </div>
+
+          <!-- Creativity -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="palette" class="cat-icon"></i>
+            </div>
+            <h3>Creativity & Art</h3>
+            <p>Digital painting, UI design, 3D modeling, traditional art, and critique feedback.</p>
+          </div>
+
+          <!-- Photography -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="camera" class="cat-icon"></i>
+            </div>
+            <h3>Photography</h3>
+            <p>Landscape shots, street portraiture, gear recommendations, and Lightroom presets.</p>
+          </div>
+
+          <!-- Videography -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="clapperboard" class="cat-icon"></i>
+            </div>
+            <h3>Videography</h3>
+            <p>Video editing, color grading, DaVinci/Premiere, VFX transitions, and short films.</p>
+          </div>
+
+          <!-- Anime -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="tv" class="cat-icon"></i>
+            </div>
+            <h3>Anime</h3>
+            <p>Seasonal anime discussions, cosplay showcases, recommendations, and fan art.</p>
+          </div>
+
+          <!-- Manhwa -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="book-open" class="cat-icon"></i>
+            </div>
+            <h3>Manhwa & Webtoons</h3>
+            <p>Action webtoons, solo leveling vibes, fantasy romance, and chapter discussions.</p>
+          </div>
+
+          <!-- Fun -->
+          <div class="cat-card">
+            <div class="cat-header">
+              <i data-lucide="smile" class="cat-icon"></i>
+            </div>
+            <h3>Fun & Lounge</h3>
+            <p>Memes, casual daily chats, trivia nights, polls, and friendly banter.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operation Team (Staff) Section -->
+    <section id="team" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">OPERATION <span class="text-neon-cyan">TEAM</span></h2>
+          <p class="section-subtitle">The dedicated 18-member staff team running the ZENOVA community network</p>
+        </div>
+
+        <!-- Founder & Admin Row -->
+        <div class="team-tier">
+          <h3 class="tier-title text-neon-pink"><i data-lucide="shield-alert"></i> Leadership</h3>
+          <div class="team-grid leadership-grid">
+            <div class="staff-card border-gold">
+              <div class="staff-avatar">
+                <i data-lucide="crown"></i>
+              </div>
+              <div class="staff-role-badge badge-founder">Owner & Founder</div>
+              <h4>ZENOVA Prime</h4>
+              <p class="staff-handle">@zenova_owner</p>
+              <p class="staff-desc">Community Visionary & Founder of the ZENOVA ecosystem.</p>
+            </div>
+
+            <div class="staff-card border-cyan">
+              <div class="staff-avatar">
+                <i data-lucide="shield-check"></i>
+              </div>
+              <div class="staff-role-badge badge-admin">Administrator</div>
+              <h4>Aether_Admin</h4>
+              <p class="staff-handle">@aether_admin</p>
+              <p class="staff-desc">Oversees daily operations, safety protocols, and system updates.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Moderators (6) -->
+        <div class="team-tier">
+          <h3 class="tier-title text-neon-cyan"><i data-lucide="shield"></i> Moderators (6)</h3>
+          <div class="team-grid mod-grid">
+            <div class="staff-card">
+              <div class="staff-role-badge badge-mod">Moderator</div>
+              <h4>Vortex_Gamer</h4>
+              <p class="staff-handle">@vortex_mod</p>
+              <p class="staff-desc">Gaming & Esports Manager</p>
+            </div>
+            <div class="staff-card">
+              <div class="staff-role-badge badge-mod">Moderator</div>
+              <h4>Lyra_Notes</h4>
+              <p class="staff-handle">@lyra_music</p>
+              <p class="staff-desc">Music & Audio Lead</p>
+            </div>
+            <div class="staff-card">
+              <div class="staff-role-badge badge-mod">Moderator</div>
+              <h4>Cyber_Otaku</h4>
+              <p class="staff-handle">@cyber_anime</p>
+              <p class="staff-desc">Anime & Manhwa Supervisor</p>
+            </div>
+            <div class="staff-card">
+              <div class="staff-role-badge badge-mod">Moderator</div>
+              <h4>Pixel_Artist</h4>
+              <p class="staff-handle">@pixel_mod</p>
+              <p class="staff-desc">Creativity & Photography Lead</p>
+            </div>
+            <div class="staff-card">
+              <div class="staff-role-badge badge-mod">Moderator</div>
+              <h4>Scholar_X</h4>
+              <p class="staff-handle">@scholar_edu</p>
+              <p class="staff-desc">Education & Study Lead</p>
+            </div>
+            <div class="staff-card">
+              <div class="staff-role-badge badge-mod">Moderator</div>
+              <h4>Titan_Sports</h4>
+              <p class="staff-handle">@titan_sports</p>
+              <p class="staff-desc">Sports & Lounge Moderator</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Helpers (10) -->
+        <div class="team-tier">
+          <h3 class="tier-title"><i data-lucide="heart-handshake"></i> Helpers (10)</h3>
+          <div class="team-grid helper-grid">
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Nova_Help01</h5><p>@nova_h1</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Astra_Support</h5><p>@astra_h2</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Blaze_Guide</h5><p>@blaze_h3</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Echo_Assist</h5><p>@echo_h4</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Frost_Helper</h5><p>@frost_h5</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Glow_Member</h5><p>@glow_h6</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Hyper_Support</h5><p>@hyper_h7</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Iris_Guide</h5><p>@iris_h8</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Jade_Assist</h5><p>@jade_h9</p></div>
+            <div class="staff-card-small"><span class="badge-helper">Helper</span> <h5>Kuro_Helper</h5><p>@kuro_h10</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rules & Safety Section -->
+    <section id="rules" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">COMMUNITY <span class="text-neon-pink">GUIDELINES</span></h2>
+          <p class="section-subtitle">Keep ZENOVA respectful, safe, and friendly for everyone</p>
+        </div>
+
+        <div class="rules-grid">
+          <div class="rule-card">
+            <div class="rule-num">01</div>
+            <h4>Respect All Members</h4>
+            <p>Treat everyone with politeness. Harassment, hate speech, or toxicity will not be tolerated.</p>
+          </div>
+          <div class="rule-card">
+            <div class="rule-num">02</div>
+            <h4>Use Correct Channels</h4>
+            <p>Keep gaming, anime, music, and study content in their designated platform categories.</p>
+          </div>
+          <div class="rule-card">
+            <div class="rule-num">03</div>
+            <h4>No Unsolicited Spam</h4>
+            <p>Self-promotion is only permitted in designated showcase channels approved by Moderators.</p>
+          </div>
+          <div class="rule-card">
+            <div class="rule-num">04</div>
+            <h4>Follow Staff Instructions</h4>
+            <p>Operation Team members (Mods & Admins) have the final say on moderation disputes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="brand-text text-neon-cyan">ZENOVA</span>
+        <p>The next-generation multi-category global community hub.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#hubs">Social Hubs</a>
+        <a href="#categories">Categories</a>
+        <a href="#team">Operation Team</a>
+        <a href="#rules">Rules</a>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 ZENOVA Community Network. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Linked JS from js/ folder -->
+  <script src="js/script.js"></script>
+</body>
+</html>
